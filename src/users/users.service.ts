@@ -1,14 +1,13 @@
 // user.service.ts
 import {
-  Injectable,
-  HttpStatus,
-  NotFoundException,
   BadRequestException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
 } from '@nestjs/common';
-import { DatabaseService } from '../database/database.service';
-import { helperResponse } from 'utils/response';
 import { ICommonResponseProps } from 'types/response';
-import { DEFAULT_ERROR_MESSAGE } from 'constants/response';
+import { helperResponse } from 'utils/response';
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 export class UsersService {
@@ -23,10 +22,7 @@ export class UsersService {
         statusCode: HttpStatus.OK,
       });
     } catch (error) {
-      return helperResponse({
-        statusCode: 500,
-        message: DEFAULT_ERROR_MESSAGE,
-      });
+      throw error;
     }
   }
 
@@ -56,6 +52,9 @@ export class UsersService {
       const user = await this.prisma.user.create({
         data,
       });
+      if (!user) {
+        throw new BadRequestException('Fail to create user');
+      }
       return helperResponse({
         isSuccess: true,
         message: 'User created successfully',
@@ -63,10 +62,7 @@ export class UsersService {
         statusCode: HttpStatus.CREATED,
       });
     } catch (error) {
-      return helperResponse({
-        statusCode: 500,
-        message: DEFAULT_ERROR_MESSAGE,
-      });
+      throw error;
     }
   }
 
@@ -79,16 +75,16 @@ export class UsersService {
         where: { id },
         data,
       });
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
       return helperResponse({
         isSuccess: true,
         data: user,
         statusCode: HttpStatus.OK,
       });
     } catch (error) {
-      return helperResponse({
-        statusCode: 500,
-        message: DEFAULT_ERROR_MESSAGE,
-      });
+      throw error;
     }
   }
 
@@ -103,10 +99,7 @@ export class UsersService {
         statusCode: HttpStatus.OK,
       });
     } catch (error) {
-      return helperResponse({
-        statusCode: 500,
-        message: DEFAULT_ERROR_MESSAGE,
-      });
+      throw error;
     }
   }
 }

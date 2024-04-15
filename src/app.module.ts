@@ -5,9 +5,16 @@ import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { APP_FILTER } from '@nestjs/core'; // Import the token for registering global filters
 import { CustomExceptionFilter } from 'errors/exception.filter';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UsersModule, DatabaseModule],
+  imports: [
+    UsersModule,
+    DatabaseModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [
     AppService,

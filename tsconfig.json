@@ -14,7 +14,8 @@
       "types/*": ["src/types/*"],
       "constants/*": ["src/constants/*"],
       "utils/*": ["src/utils/*"],
-      "errors/*": ["src/errors/*"]
+      "errors/*": ["src/errors/*"],
+      "config/*": ["src/config/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
