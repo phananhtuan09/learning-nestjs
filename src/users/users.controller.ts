@@ -7,12 +7,13 @@ import {
   Param,
   Delete,
   ValidationPipe,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiTags, ApiBody } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
+import { CacheInterceptor } from '@nestjs/cache-manager';
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
@@ -28,7 +29,7 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll();
   }
-
+  @UseInterceptors(CacheInterceptor)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);

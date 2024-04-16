@@ -15,7 +15,8 @@
       "constants/*": ["src/constants/*"],
       "utils/*": ["src/utils/*"],
       "errors/*": ["src/errors/*"],
-      "config/*": ["src/config/*"]
+      "config/*": ["src/config/*"],
+      "middleware/*": ["src/middleware/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
